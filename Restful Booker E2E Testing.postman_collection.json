@@ -53,6 +53,53 @@
       "name": "Booking",
       "item": [
         {
+          "name": "Createbooking",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\npm.test(\"Your test name\", function () {\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.be.a(\"object\");\r\n        pm.expect(jsonData).to.be.a(\"object\");\r\n        pm.expect(jsonData).to.have.property(\"booking\");\r\n        pm.expect(jsonData).to.have.property(\"bookingid\");\r\npm.environment.set(\"bookingid\",jsonData.bookingid);\r\n});\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstname\": \"{{firstname}}\",\r\n    \"lastname\": \"{{lastname}}\",\r\n    \"totalprice\": {{totalprice}},\r\n    \"depositpaid\": {{depositpaid}},\r\n    \"bookingdates\": {\r\n        \"checkin\": \"{{checkin}}\",\r\n        \"checkout\": \"{{checkout}}\"\r\n    },\r\n    \"additionalneeds\": \"{{additionalneeds}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/booking",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            },
+            "description": "**Overview:**\n\nUsing Post method to create new booking record.\n\n**Behavior:**\n\n1. Send the new booking details in json format\n    \n2. Returns a response containing the newly create data already added.\n    \n3. Automatically extracts the created \\`bookingid\\` and saves it to the environment variable \\`{{bookingid}}\\`.\n    \n\n**Assertions:**\n\n1. Check status code is 200 OK.\n    \n2. Check \"Response body contains a json object\".\n    \n3. Verify response contains \\`booking\\` and \\`bookingid\\` properties."
+          },
+          "response": []
+        },
+        {
           "name": "GetBookingIds",
           "event": [
             {
@@ -113,53 +160,6 @@
               ]
             },
             "description": "**Overview:**\n\nusing GET method to retrieve data related to bookingid.\n\n**Behavior:**\n\n1\\. Takes the dynamic path variable {{bookingid}} (Read-Only operation).  \n2\\. Returns a response related to existing booking ID.\n\n**Assertions:**\n\n1. Check status code is 200 OK.\n    \n2. Check \"Response body contains firstname\"."
-          },
-          "response": []
-        },
-        {
-          "name": "Createbooking",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\npm.test(\"Your test name\", function () {\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.be.a(\"object\");\r\n        pm.expect(jsonData).to.be.a(\"object\");\r\n        pm.expect(jsonData).to.have.property(\"booking\");\r\n        pm.expect(jsonData).to.have.property(\"bookingid\");\r\npm.environment.set(\"bookingid\",jsonData.bookingid);\r\n});\r\n"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"firstname\" : \"Jim\",\r\n    \"lastname\" : \"Brown\",\r\n    \"totalprice\" : 111,\r\n    \"depositpaid\" : true,\r\n    \"bookingdates\" : {\r\n        \"checkin\" : \"2018-01-01\",\r\n        \"checkout\" : \"2019-01-01\"\r\n    },\r\n    \"additionalneeds\" : \"Breakfast\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{baseURL}}/booking",
-              "host": [
-                "{{baseURL}}"
-              ],
-              "path": [
-                "booking"
-              ]
-            },
-            "description": "**Overview:**\n\nUsing Post method to create new booking record.\n\n**Behavior:**\n\n1. Send the new booking details in json format\n    \n2. Returns a response containing the newly create data already added.\n    \n3. Automatically extracts the created \\`bookingid\\` and saves it to the environment variable \\`{{bookingid}}\\`.\n    \n\n**Assertions:**\n\n1. Check status code is 200 OK.\n    \n2. Check \"Response body contains a json object\".\n    \n3. Verify response contains \\`booking\\` and \\`bookingid\\` properties."
           },
           "response": []
         },

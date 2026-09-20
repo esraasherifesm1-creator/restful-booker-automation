@@ -11,6 +11,11 @@ This project validates the authentication and CRUD lifecycle of the Restful Book
 * **newman-reporter-htmlextra**: Detailed, interactive HTML reporting tool.
 * **Node.js**: Environment runtime.
 
+## 📊 Data-Driven Testing (DDT)
+This suite leverages dynamic data decoupling via external JSON data sources (`booking_data.json`).
+* **Multi-Iteration Coverage**: Runs the full suite against multiple user profiles (e.g., `Sherif`, `Esraa`) without duplicating request logic.
+* **Dynamic Placeholders**: Request bodies utilize Postman environment variables (`{{firstname}}`, `{{lastname}}`, etc.) populated automatically per iteration.
+
 ## 🧪 Test Scenarios Covered
 
 ### 🟢 Positive Scenarios (Happy Path & CRUD)
@@ -32,3 +37,11 @@ This project validates the authentication and CRUD lifecycle of the Restful Book
 * Newman & htmlextra installed globally:
 ```bash
   npm install -g newman newman-reporter-htmlextra
+### Execution Steps
+
+ **Clone the repository:**
+```bash
+npm install -g newman newman-reporter-htmlextra
+git clone <YOUR_REPOSITORY_URL>
+cd <YOUR_REPOSITORY_FOLDER>
+npx newman run "Restful Booker E2E Testing.postman_collection.json" -e "Restful Booker Env.postman_environment.json" -d "booking_data.json" -r cli,htmlextra
